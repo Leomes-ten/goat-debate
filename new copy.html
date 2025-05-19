@@ -1,0 +1,2126 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GOAT Debate: Ronaldo vs Messi</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap');
+        
+        body {
+            font-family: 'Poppins', sans-serif;
+            background-color: #0f172a;
+            color: #e2e8f0;
+        }
+        
+        .glass-card {
+            background: rgba(15, 23, 42, 0.7);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.37);
+            border-radius: 12px;
+        }
+        
+        .player-card {
+            transition: all 0.3s ease;
+        }
+        
+        .player-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px -5px rgba(59, 130, 246, 0.5);
+        }
+        
+        .ronaldo-gradient {
+            background: linear-gradient(135deg, #a50000 0%, #000000 100%);
+        }
+        
+        .messi-gradient {
+            background: linear-gradient(135deg, #00529b 0%, #7ab6e6 100%);
+        }
+        
+        .vote-btn {
+            transition: all 0.3s ease;
+        }
+        
+        .vote-btn:hover {
+            transform: scale(1.05);
+            box-shadow: 0 0 20px rgba(255, 255, 255, 0.3);
+        }
+        
+        .trophy-icon {
+            filter: drop-shadow(0 0 5px rgba(255, 215, 0, 0.7));
+        }
+        
+        .highlight-video {
+            transition: all 0.3s ease;
+        }
+        
+        .highlight-video:hover {
+            transform: scale(1.02);
+            box-shadow: 0 0 20px rgba(59, 130, 246, 0.5);
+        }
+        
+        .comment-box {
+            transition: all 0.2s ease;
+        }
+        
+        .comment-box:hover {
+            background: rgba(30, 41, 59, 0.5);
+        }
+        
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 100;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            overflow: auto;
+            background-color: rgba(0,0,0,0.8);
+        }
+        
+        .modal-content {
+            background-color: #1e293b;
+            margin: 5% auto;
+            padding: 20px;
+            border: 1px solid #334155;
+            width: 80%;
+            max-width: 500px;
+            border-radius: 12px;
+            animation: modalopen 0.5s;
+        }
+        
+        @keyframes modalopen {
+            from {opacity: 0; transform: translateY(-50px)}
+            to {opacity: 1; transform: translateY(0)}
+        }
+        
+        .close {
+            color: #aaa;
+            float: right;
+            font-size: 28px;
+            font-weight: bold;
+            cursor: pointer;
+        }
+        
+        .close:hover {
+            color: white;
+        }
+        
+        .form-input {
+            background: rgba(30, 41, 59, 0.7);
+            border: 1px solid #334155;
+            color: white;
+        }
+        
+        .form-input:focus {
+            outline: none;
+            border-color: #3b82f6;
+            box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.3);
+        }
+        
+        .gallery-img {
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+        
+        .gallery-img:hover {
+            transform: scale(1.03);
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.3);
+        }
+        
+        .stats-table {
+            border-collapse: separate;
+            border-spacing: 0;
+        }
+        
+        .stats-table th, .stats-table td {
+            border: 1px solid #334155;
+            padding: 12px;
+            text-align: center;
+        }
+        
+        .stats-table th {
+            background-color: #1e293b;
+        }
+        
+        .stats-table tr:nth-child(even) {
+            background-color: rgba(30, 41, 59, 0.5);
+        }
+        
+        .stats-table tr:hover {
+            background-color: rgba(59, 130, 246, 0.1);
+        }
+        
+        .tabs button.active {
+            border-bottom: 2px solid #3b82f6;
+            color: #3b82f6;
+            font-weight: 600;
+        }
+        
+        .tab-content {
+            display: none;
+        }
+        
+        .tab-content.active {
+            display: block;
+            animation: fadeIn 0.5s;
+        }
+        
+        @keyframes fadeIn {
+            from {opacity: 0;}
+            to {opacity: 1;}
+        }
+        
+        .like-btn {
+            transition: all 0.2s ease;
+        }
+        
+        .like-btn:hover {
+            color: #ef4444;
+            transform: scale(1.1);
+        }
+        
+        .like-btn.liked {
+            color: #ef4444;
+        }
+        
+        .pulse {
+            animation: pulse 2s infinite;
+        }
+        
+        @keyframes pulse {
+            0% {box-shadow: 0 0 0 0 rgba(59, 130, 246, 0.7);}
+            70% {box-shadow: 0 0 0 10px rgba(59, 130, 246, 0);}
+            100% {box-shadow: 0 0 0 0 rgba(59, 130, 246, 0);}
+        }
+        
+        .highlight-section {
+            background: linear-gradient(135deg, rgba(15, 23, 42, 0.9) 0%, rgba(30, 41, 59, 0.9) 100%);
+        }
+        
+        .donate-btn {
+            background: linear-gradient(135deg, #f59e0b 0%, #ef4444 100%);
+            transition: all 0.3s ease;
+        }
+        
+        .donate-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 20px -5px rgba(239, 68, 68, 0.5);
+        }
+
+        /* Navbar Glassmorphism & Futuristic Hover */
+        nav.glass-card {
+            background: rgba(20, 30, 48, 0.7);
+            backdrop-filter: blur(18px) saturate(180%);
+            border: 1.5px solid rgba(255,255,255,0.08);
+            box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.25);
+        }
+        nav .nav-link {
+            position: relative;
+            transition: color 0.3s;
+            font-weight: 500;
+            letter-spacing: 0.04em;
+        }
+        nav .nav-link::after {
+            content: '';
+            position: absolute;
+            left: 0; right: 0; bottom: -4px;
+            height: 2.5px;
+            background: linear-gradient(90deg, #f0f, #0ff, #fff, #f0f);
+            border-radius: 2px;
+            opacity: 0;
+            transform: scaleX(0);
+            transition: all 0.3s cubic-bezier(.4,2,.6,1);
+        }
+        nav .nav-link:hover {
+            color: #fff;
+            text-shadow: 0 0 8px #0ff, 0 0 2px #fff;
+        }
+        nav .nav-link:hover::after {
+            opacity: 1;
+            transform: scaleX(1);
+        }
+
+        /* Futuristic Glassy Modal */
+        .modal-content {
+            background: rgba(30, 41, 59, 0.7);
+            backdrop-filter: blur(18px) saturate(180%);
+            border: 1.5px solid rgba(255,255,255,0.08);
+            box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.25);
+        }
+        /* Remove blue from login/signup buttons */
+        #loginForm button, #signupForm button {
+            background: rgba(255,255,255,0.08);
+            color: #fff;
+            border: 1.5px solid rgba(255,255,255,0.15);
+            backdrop-filter: blur(8px);
+            transition: background 0.3s, color 0.3s;
+        }
+        #loginForm button:hover, #signupForm button:hover {
+            background: rgba(255,255,255,0.18);
+            color: #0ff;
+        }
+
+        /* Success Modal Animation */
+        #successModal .modal-content {
+            border: 2px solid #0ff;
+            box-shadow: 0 0 40px #0ff6, 0 0 8px #fff4;
+            animation: popIn 0.7s cubic-bezier(.4,2,.6,1);
+        }
+        @keyframes popIn {
+            0% { transform: scale(0.7); opacity: 0; }
+            80% { transform: scale(1.05); }
+            100% { transform: scale(1); opacity: 1; }
+        }
+        #successModal .share-cta {
+            color: #0ff;
+            font-weight: 700;
+            text-shadow: 0 0 8px #0ff, 0 0 2px #fff;
+            animation: pulseShare 1.5s infinite alternate;
+        }
+        @keyframes pulseShare {
+            0% { text-shadow: 0 0 8px #0ff, 0 0 2px #fff; }
+            100% { text-shadow: 0 0 16px #0ff, 0 0 8px #fff; }
+        }
+
+        /* Discussion Like/Dislike */
+        .like-btn, .dislike-btn {
+            transition: color 0.2s, transform 0.2s;
+            cursor: pointer;
+            margin-right: 1rem;
+        }
+        .like-btn.liked { color: #22d3ee; }
+        .dislike-btn.disliked { color: #f87171; }
+        .like-btn:hover { color: #22d3ee; transform: scale(1.15);}
+        .dislike-btn:hover { color: #f87171; transform: scale(1.15);}
+        .reply-btn { color: #a5b4fc; margin-right: 1rem; cursor: pointer; }
+        .reply-btn:hover { color: #fff; text-decoration: underline; }
+        .reply-input { margin-top: 0.5rem; }
+
+        html {
+            scroll-behavior: smooth;
+        }
+        .highlight-vote {
+            border: 3px solid #0ff;
+            box-shadow: 0 0 40px #0ff6, 0 0 8px #fff4;
+            animation: pulseVote 2s infinite alternate;
+        }
+        @keyframes pulseVote {
+            0% { box-shadow: 0 0 40px #0ff6, 0 0 8px #fff4; }
+            100% { box-shadow: 0 0 80px #0ffb, 0 0 16px #fff8; }
+        }
+        .vote-btn {
+            background: rgba(255,255,255,0.08);
+            color: #fff;
+            border: 1.5px solid rgba(255,255,255,0.15);
+            backdrop-filter: blur(8px);
+            transition: background 0.3s, color 0.3s, transform 0.2s;
+        }
+        .vote-btn:hover {
+            background: rgba(0,255,255,0.18);
+            color: #0ff;
+            transform: scale(1.07);
+            box-shadow: 0 0 20px #0ff6;
+        }
+        .user-name {
+            color: #0ff;
+            font-weight: bold;
+            text-shadow: 0 0 8px #0ff, 0 0 2px #fff;
+            margin-right: 1rem;
+        }
+        .delete-reply-btn {
+            color: #f87171;
+            margin-left: 1rem;
+            font-size: 0.9em;
+            cursor: pointer;
+            transition: color 0.2s;
+        }
+        .delete-reply-btn:hover {
+            color: #fff;
+            text-decoration: underline;
+        }
+
+        /* Responsive improvements */
+        @media (max-width: 1024px) {
+            .md\:flex { display: none !important; }
+            .md\:hidden { display: block !important; }
+        }
+        @media (max-width: 768px) {
+            .container { max-width: 100% !important; padding-left: 1rem !important; padding-right: 1rem !important; }
+            .w-48, .h-48 { width: 7rem !important; height: 7rem !important; }
+            .w-64 { width: 5rem !important; }
+            .h-screen { min-height: 70vh !important; }
+            .text-5xl, .md\:text-7xl { font-size: 2rem !important; }
+            .text-4xl, .md\:text-5xl { font-size: 1.5rem !important; }
+        }
+        @media (max-width: 500px) {
+            .w-48, .h-48, .w-64 { width: 4rem !important; height: 4rem !important; }
+            .rounded-full { border-radius: 1rem !important; }
+            .glass-card { padding: 1rem !important; }
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="glass-card sticky top-0 z-50">
+        <div class="container mx-auto px-4 py-3">
+            <div class="flex justify-between items-center">
+                <div class="flex items-center space-x-2">
+                    <i class="fas fa-futbol text-3xl text-cyan-400 drop-shadow-lg"></i>
+                    <h1 class="text-2xl font-bold bg-gradient-to-r from-cyan-400 via-fuchsia-500 to-white bg-clip-text text-transparent tracking-wider">GOAT Debate</h1>
+                </div>
+                <div class="hidden md:flex space-x-6">
+                    <a href="#home" class="nav-link text-gray-300">Home</a>
+                    <a href="#vote" class="nav-link text-gray-300">Vote</a>
+                    <a href="#stats" class="nav-link text-gray-300">Stats</a>
+                    <a href="#trophies" class="nav-link text-gray-300">Trophies</a>
+                    <a href="#highlights" class="nav-link text-gray-300">Highlights</a>
+                    <a href="#gallery" class="nav-link text-gray-300">Gallery</a>
+                    <a href="#discussion" class="nav-link text-gray-300">Discussion</a>
+                </div>
+                <div class="flex items-center space-x-4 relative">
+                    <span id="userNameDisplay" class="user-name hidden cursor-pointer relative">
+                        <!-- Dropdown -->
+                        <span id="logoutDropdown" class="hidden absolute right-0 mt-2 w-32 bg-slate-800 rounded shadow-lg z-50">
+                            <button id="logoutBtn" class="block w-full text-left px-4 py-2 text-gray-200 hover:bg-slate-700">Logout</button>
+                        </span>
+                    </span>
+                    <button id="loginBtn" class="px-4 py-2 rounded-lg bg-transparent border border-white/20 hover:bg-white/10 backdrop-blur-md transition">Login</button>
+                    <button id="signupBtn" class="px-4 py-2 rounded-lg border border-cyan-400 text-cyan-400 hover:bg-cyan-400/10 hover:text-white transition">Sign Up</button>
+                    <button class="md:hidden text-white">
+                        <i class="fas fa-bars text-xl"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section (Who is the REAL GOAT?) -->
+<section id="home" class="relative h-[60vh] flex items-center justify-center overflow-hidden">
+    <div class="absolute inset-0 bg-black opacity-60 z-0"></div>
+    <!-- Both images fit fully (no crop), each covers half the section -->
+    <div class="absolute inset-0 flex w-full h-full z-10 pointer-events-none">
+        <div class="w-1/2 h-full relative overflow-hidden flex items-center justify-center bg-black/40">
+            <img src="cru7.jpg"
+                 alt="Ronaldo"
+                 class="hero-goat-img"
+                 style="max-width:100%; max-height:100%; width:auto; height:auto; object-fit:contain; border-radius:0; filter: drop-shadow(0 0 40px #a50000); background:transparent;">
+        </div>
+        <div class="w-1/2 h-full relative overflow-hidden flex items-center justify-center bg-black/40">
+            <img src="[80+] Lionel Messi Wallpaper Unique, High Quality HD.jpg"
+                 alt="Messi"
+                 class="hero-goat-img"
+                 style="max-width:100%; max-height:100%; width:auto; height:auto; object-fit:contain; border-radius:0; filter: drop-shadow(0 0 40px #7ab6e6); background:transparent;">
+        </div>
+    </div>
+    <div class="container mx-auto px-4 z-20 text-center relative">
+        <h1 class="text-5xl md:text-7xl font-bold mb-6 bg-gradient-to-r from-blue-500 via-red-500 to-purple-600 bg-clip-text text-transparent">Who is the REAL GOAT?</h1>
+        <p class="text-xl md:text-2xl mb-8 max-w-3xl mx-auto">
+            <span style="background: linear-gradient(90deg, #f59e42 0%, #f472b6 100%); -webkit-background-clip: text; color: transparent; background-clip: text; font-weight: bold;">
+                The eternal debate between two football legends -
+            </span>
+            <span class="font-bold text-red-400 drop-shadow" style="text-shadow:0 0 8px #a50000;"> Cristiano Ronaldo </span>
+            <span class="mx-2 font-bold text-gray-300">&amp;</span>
+            <span class="font-bold text-blue-400 drop-shadow" style="text-shadow:0 0 8px #7ab6e6;"> Lionel Messi </span>
+        </p>
+        <div class="flex flex-col md:flex-row justify-center gap-4">
+            <a href="#vote" class="px-8 py-4 text-xl rounded-full glass-card border border-white/20 hover:bg-white/10 backdrop-blur-md transition font-bold flex items-center justify-center gap-2 shadow-lg">
+                <i class="fas fa-vote-yea"></i> Vote Now
+            </a>
+            <a href="#stats" 
+               class="px-8 py-4 text-xl rounded-full glass-card border border-white/20 bg-white/10 bg-clip-padding backdrop-blur-md transition font-bold flex items-center justify-center gap-2 shadow-lg glass-blur-btn hover:bg-white/20 hover:backdrop-blur-lg"
+               style="background: rgba(255,255,255,0.08); backdrop-filter: blur(12px);">
+                <i class="fas fa-chart-bar"></i> Compare Stats
+            </a>
+        </div>
+    </div>
+    <style>
+        .hero-goat-img {
+            animation: floatGoat 5s ease-in-out infinite alternate;
+            transition: transform 0.3s, filter 0.3s;
+            pointer-events: none;
+            border-radius: 0;
+            background: transparent;
+            /* No crop, fit full image */
+            max-width: 100%;
+            max-height: 100%;
+            width: auto;
+            height: auto;
+            object-fit: contain;
+            display: block;
+        }
+        .hero-goat-img:hover {
+            transform: scale(1.03) rotate(-2deg);
+            filter: drop-shadow(0 0 80px #fff8);
+            z-index: 20;
+        }
+        @keyframes floatGoat {
+            0% { transform: translateY(0);}
+            50% { transform: translateY(-10px);}
+            100% { transform: translateY(0);}
+        }
+        @media (max-width: 900px) {
+            #home .w-1\/2 { width: 100% !important; }
+            #home .h-full { height: 50% !important; }
+            #home .flex { flex-direction: column !important; }
+            .hero-goat-img { height: 40vh !important; max-height: 40vh !important; }
+        }
+        @media (max-width: 600px) {
+            #home .w-1\/2, #home .h-full { width: 100% !important; height: 40% !important; }
+            .hero-goat-img { height: 28vh !important; max-height: 28vh !important; }
+        }
+        .glass-blur-btn {
+            background: rgba(255,255,255,0.08) !important;
+            backdrop-filter: blur(12px) !important;
+            border: 1.5px solid rgba(255,255,255,0.15);
+            color: #fff;
+        }
+        .glass-blur-btn:hover {
+            background: rgba(255,255,255,0.18) !important;
+            color: #0ff !important;
+            box-shadow: 0 0 20px #0ff6;
+        }
+    </style>
+</section>
+
+    <!-- Player Introduction -->
+    <section class="py-16 bg-gradient-to-b from-slate-900 to-slate-800">
+        <div class="container mx-auto px-4">
+            <h2 class="text-3xl md:text-4xl font-bold text-center mb-12">The Two Titans of Football</h2>
+            
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                <!-- Ronaldo Card -->
+                <div class="glass-card player-card ronaldo-gradient p-6 rounded-xl">
+                    <div class="flex flex-col md:flex-row items-center">
+                        <img src="download (3).jpg" alt="Cristiano Ronaldo" class="w-48 h-48 object-cover rounded-full border-4 border-white shadow-lg mb-4 md:mb-0 md:mr-6">
+                        <div>
+                            <h3 class="text-2xl font-bold mb-2">Cristiano Ronaldo</h3>
+                            <p class="text-gray-300 mb-4">The relentless machine, the ultimate athlete, the champion who conquered England, Spain, and Italy.</p>
+                            <div class="flex flex-wrap gap-2">
+                                <span class="px-3 py-1 bg-red-900 rounded-full text-sm">5x Ballon d'Or</span>
+                                <span class="px-3 py-1 bg-red-900 rounded-full text-sm">5x Champions League</span>
+                                <span class="px-3 py-1 bg-red-900 rounded-full text-sm">All-time top scorer</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Messi Card -->
+                <div class="glass-card player-card messi-gradient p-6 rounded-xl">
+                    <div class="flex flex-col md:flex-row items-center">
+                        <img src="download (4).jpg" alt="Lionel Messi" class="w-48 h-48 object-cover rounded-full border-4 border-white shadow-lg mb-4 md:mb-0 md:mr-6">
+                        <div>
+                            <h3 class="text-2xl font-bold mb-2">Lionel Messi</h3>
+                            <p class="text-gray-300 mb-4">The magical genius, the artist of the pitch, the one who redefined what's possible with a football.</p>
+                            <div class="flex flex-wrap gap-2">
+                                <span class="px-3 py-1 bg-blue-900 rounded-full text-sm">7x Ballon d'Or</span>
+                                <span class="px-3 py-1 bg-blue-900 rounded-full text-sm">4x Champions League</span>
+                                <span class="px-3 py-1 bg-blue-900 rounded-full text-sm">World Cup Winner</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Voting Section (move here, highlight) -->
+<section id="vote" class="py-16 bg-gradient-to-b from-slate-800 to-slate-900 highlight-vote">
+    <div class="container mx-auto px-4">
+        <h2 class="text-4xl md:text-5xl font-extrabold text-center mb-4 bg-gradient-to-r from-cyan-400 via-fuchsia-500 to-white bg-clip-text text-transparent tracking-wider animate-pulse">
+            VOTE FOR THE GOAT!
+        </h2>
+        <div class="flex justify-center mb-8">
+            <img src="mammal.png" alt="GOAT Icon" class="w-24 h-24 object-contain" />
+        </div>
+        <p class="text-xl text-center mb-12 max-w-2xl mx-auto">Cast your vote and settle the greatest debate in football history! <span class="font-bold text-cyan-400">Your vote matters most!</span></p>
+        <div id="voteOptions" class="glass-card p-8 max-w-4xl mx-auto">
+            <!-- Voting options or voted player will be rendered here by JS -->
+        </div>
+    </div>
+    <style>
+        .messi-vote-img {
+            left: -12px !important;
+            top: 12px !important;
+        }
+        @media (max-width: 768px) {
+            .messi-vote-img {
+                left: 0 !important;
+                top: 8px !important;
+            }
+        }
+        /* Dropdown styling */
+        #logoutDropdown {
+            min-width: 120px;
+        }
+    </style>
+</section>
+
+<script>
+    // --- User Login/Signup/Logout State ---
+    function showUserName() {
+        const userName = localStorage.getItem('userName');
+        const userNameDisplay = document.getElementById('userNameDisplay');
+        const loginBtn = document.getElementById('loginBtn');
+        const signupBtn = document.getElementById('signupBtn');
+        if (userName) {
+            userNameDisplay.textContent = `👤 ${userName}`;
+            userNameDisplay.classList.remove('hidden');
+            if (loginBtn) loginBtn.classList.add('hidden');
+            if (signupBtn) signupBtn.classList.add('hidden');
+        } else {
+            userNameDisplay.classList.add('hidden');
+            if (loginBtn) loginBtn.classList.remove('hidden');
+            if (signupBtn) signupBtn.classList.remove('hidden');
+        }
+    }
+    showUserName();
+
+    // User Dropdown for Logout
+    // (Variable declared later in the main script, so just use the existing variable here)
+    if (userNameDisplay) {
+        logoutDropdown.classList.add('hidden'); // Ensure it's hidden initially
+        userNameDisplay.addEventListener('click', function (e) {
+            e.stopPropagation();
+            logoutDropdown.classList.toggle('hidden');
+        });
+        document.addEventListener('click', function () {
+            logoutDropdown.classList.add('hidden');
+        });
+    }
+    if (logoutBtn) {
+        logoutBtn.addEventListener('click', function () {
+            localStorage.removeItem('isLoggedIn');
+            localStorage.removeItem('userName');
+            localStorage.removeItem('userVote');
+            location.reload();
+        });
+    }
+
+    // Registration/Login logic: store/display user name
+    document.getElementById('loginForm').addEventListener('submit', function(e) {
+        e.preventDefault();
+        const email = document.getElementById('loginEmail').value;
+        localStorage.setItem('isLoggedIn', 'true');
+        localStorage.setItem('userName', email.split('@')[0]);
+        closeModal(loginModal);
+        showUserName();
+        updateVotingState();
+        // Check for pending vote
+        const pendingVote = localStorage.getItem('pendingVote');
+        if (pendingVote) {
+            submitVote(pendingVote);
+            localStorage.removeItem('pendingVote');
+        }
+    });
+    document.getElementById('signupForm').addEventListener('submit', function(e) {
+        e.preventDefault();
+        const name = document.getElementById('signupName').value;
+        const password = document.getElementById('signupPassword').value;
+        const confirm = document.getElementById('signupConfirm').value;
+        if (password !== confirm) {
+            alert('Passwords do not match!');
+            return;
+        }
+        localStorage.setItem('isLoggedIn', 'true');
+        localStorage.setItem('userName', name);
+        closeModal(signupModal);
+        showUserName();
+        updateVotingState();
+        // Check for pending vote
+        const pendingVote = localStorage.getItem('pendingVote');
+        if (pendingVote) {
+            submitVote(pendingVote);
+            localStorage.removeItem('pendingVote');
+        }
+    });
+
+    // --- Voting Logic: One User, One Vote ---
+    function isLoggedIn() {
+        return localStorage.getItem('isLoggedIn') === 'true';
+    }
+    function hasVoted() {
+        return !!localStorage.getItem('userVote');
+    }
+    function blockVoting() {
+        voteRonaldo.disabled = true;
+        voteMessi.disabled = true;
+        voteRonaldo.classList.add('opacity-50', 'cursor-not-allowed');
+        voteMessi.classList.add('opacity-50', 'cursor-not-allowed');
+        // Change button text to "You have voted"
+        const userVote = localStorage.getItem('userVote');
+        if (userVote === 'ronaldo') {
+            voteRonaldo.innerHTML = '<i class="fas fa-check-circle mr-2"></i> You have voted';
+            voteMessi.style.display = 'none';
+        } else if (userVote === 'messi') {
+            voteMessi.innerHTML = '<i class="fas fa-check-circle mr-2"></i> You have voted';
+            voteRonaldo.style.display = 'none';
+        }
+    }
+    function unblockVoting() {
+        voteRonaldo.disabled = false;
+        voteMessi.disabled = false;
+        voteRonaldo.classList.remove('opacity-50', 'cursor-not-allowed');
+        voteMessi.classList.remove('opacity-50', 'cursor-not-allowed');
+        voteRonaldo.innerHTML = '<i class="fas fa-check-circle mr-2"></i> Vote for CR7';
+        voteMessi.innerHTML = '<i class="fas fa-check-circle mr-2"></i> Vote for Messi';
+        voteRonaldo.style.display = '';
+        voteMessi.style.display = '';
+    }
+    function updateVotingState() {
+        if (!isLoggedIn()) {
+            unblockVoting();
+        } else if (hasVoted()) {
+            blockVoting();
+        } else {
+            unblockVoting();
+        }
+    }
+    updateVotingState();
+
+    voteRonaldo.addEventListener('click', () => {
+        if (hasVoted()) return;
+        if (!isLoggedIn()) {
+            openModal(voteModal);
+            localStorage.setItem('pendingVote', 'ronaldo');
+        } else {
+            submitVote('ronaldo');
+        }
+    });
+    voteMessi.addEventListener('click', () => {
+        if (hasVoted()) return;
+        if (!isLoggedIn()) {
+            openModal(voteModal);
+            localStorage.setItem('pendingVote', 'messi');
+        } else {
+            submitVote('messi');
+        }
+    });
+
+    function submitVote(player) {
+        // Save vote
+        localStorage.setItem('userVote', player);
+        updateVotingState();
+        // Show success modal with player name and image and user's name
+        const userName = localStorage.getItem('userName') || '';
+        document.getElementById('successTitle').textContent = `${userName}, your vote is in!`;
+        document.getElementById('votedPlayer').textContent = player === 'ronaldo' ? 'Cristiano Ronaldo' : 'Lionel Messi';
+        const votedPlayerImg = document.getElementById('votedPlayerImg');
+        votedPlayerImg.innerHTML = player === 'ronaldo'
+            ? `<img src="download (6).jpg" alt="Cristiano Ronaldo" class="w-32 h-32 object-cover rounded-full border-4 border-red-500 shadow-lg mb-2">`
+            : `<img src="Messi 10.jpg" alt="Lionel Messi" class="w-32 h-32 object-cover rounded-full border-4 border-blue-500 shadow-lg mb-2">`;
+        // Remove share-cta line from popup
+        document.getElementById('successMessage').innerHTML = `
+            <span class="font-bold" id="votedPlayer"></span> just got your support!
+        `;
+        openModal(successModal);
+    }
+
+    // Keep user logged in until logout (handled by localStorage, no expiry)
+    // Logout handled above
+
+    // On page load, update voting state and user name
+    document.addEventListener('DOMContentLoaded', () => {
+        showUserName();
+        updateVotingState();
+    });
+</script>
+
+    <!-- Stats Comparison -->
+    <section id="stats" class="py-16 bg-slate-900">
+        <div class="container mx-auto px-4">
+            <h2 class="text-3xl md:text-4xl font-bold text-center mb-12">Career Statistics</h2>
+            
+            <div class="glass-card p-6 mb-8">
+                <div class="tabs flex border-b border-gray-700 mb-6">
+                    <button class="tab-btn active px-4 py-2 font-medium" data-tab="overall">Overall</button>
+                    <button class="tab-btn px-4 py-2 font-medium" data-tab="club">Club</button>
+                    <button class="tab-btn px-4 py-2 font-medium" data-tab="international">International</button>
+                </div>
+                
+                <div id="overall" class="tab-content active">
+                    <div class="overflow-x-auto">
+                        <table class="stats-table w-full">
+                            <thead>
+                                <tr>
+                                    <th class="w-1/4">Statistic</th>
+                                    <th class="w-1/4">Cristiano Ronaldo</th>
+                                    <th class="w-1/4">Lionel Messi</th>
+                                    <th class="w-1/4">Leader</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>Games Played</td>
+                                    <td id="ronaldo-games">1159</td>
+                                    <td id="messi-games">1038</td>
+                                    <td><span class="font-bold text-red-500">Ronaldo</span></td>
+                                </tr>
+                                <tr>
+                                    <td>Goals</td>
+                                    <td id="ronaldo-goals">867</td>
+                                    <td id="messi-goals">821</td>
+                                    <td><span class="font-bold text-red-500">Ronaldo</span></td>
+                                </tr>
+                                <tr>
+                                    <td>Assists</td>
+                                    <td id="ronaldo-assists">263</td>
+                                    <td id="messi-assists">361</td>
+                                    <td><span class="font-bold text-blue-500">Messi</span></td>
+                                </tr>
+                                <tr>
+                                    <td>Hat-tricks</td>
+                                    <td id="ronaldo-hattricks">62</td>
+                                    <td id="messi-hattricks">57</td>
+                                    <td><span class="font-bold text-red-500">Ronaldo</span></td>
+                                </tr>
+                                <tr>
+                                    <td>Penalties Scored</td>
+                                    <td id="ronaldo-penalties">152</td>
+                                    <td id="messi-penalties">108</td>
+                                    <td><span class="font-bold text-red-500">Ronaldo</span></td>
+                                </tr>
+                                <tr>
+                                    <td>Free-kick Goals</td>
+                                    <td id="ronaldo-freekicks">60</td>
+                                    <td id="messi-freekicks">65</td>
+                                    <td><span class="font-bold text-blue-500">Messi</span></td>
+                                </tr>
+                                <tr>
+                                    <td>Ballon d'Or</td>
+                                    <td id="ronaldo-ballon">5</td>
+                                    <td id="messi-ballon">7</td>
+                                    <td><span class="font-bold text-blue-500">Messi</span></td>
+                                </tr>
+                                <tr>
+                                    <td>Champions League Titles</td>
+                                    <td id="ronaldo-ucl">5</td>
+                                    <td id="messi-ucl">4</td>
+                                    <td><span class="font-bold text-red-500">Ronaldo</span></td>
+                                </tr>
+                                <tr>
+                                    <td>League Titles</td>
+                                    <td id="ronaldo-leagues">7</td>
+                                    <td id="messi-leagues">12</td>
+                                    <td><span class="font-bold text-blue-500">Messi</span></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                
+                <div id="club" class="tab-content">
+                    <div class="overflow-x-auto">
+                        <table class="stats-table w-full">
+                            <thead>
+                                <tr>
+                                    <th class="w-1/4">Statistic</th>
+                                    <th class="w-1/4">Cristiano Ronaldo</th>
+                                    <th class="w-1/4">Lionel Messi</th>
+                                    <th class="w-1/4">Leader</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>Club Games</td>
+                                    <td>951</td>
+                                    <td>853</td>
+                                    <td><span class="font-bold text-red-500">Ronaldo</span></td>
+                                </tr>
+                                <tr>
+                                    <td>Club Goals</td>
+                                    <td>723</td>
+                                    <td>704</td>
+                                    <td><span class="font-bold text-red-500">Ronaldo</span></td>
+                                </tr>
+                                <tr>
+                                    <td>Club Assists</td>
+                                    <td>219</td>
+                                    <td>303</td>
+                                    <td><span class="font-bold text-blue-500">Messi</span></td>
+                                </tr>
+                                <tr>
+                                    <td>Goals per Game</td>
+                                    <td>0.76</td>
+                                    <td>0.83</td>
+                                    <td><span class="font-bold text-blue-500">Messi</span></td>
+                                </tr>
+                                <tr>
+                                    <td>UCL Goals</td>
+                                    <td>140</td>
+                                    <td>129</td>
+                                    <td><span class="font-bold text-red-500">Ronaldo</span></td>
+                                </tr>
+                                <tr>
+                                    <td>UCL Assists</td>
+                                    <td>42</td>
+                                    <td>40</td>
+                                    <td><span class="font-bold text-red-500">Ronaldo</span></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                
+                <div id="international" class="tab-content">
+                    <div class="overflow-x-auto">
+                        <table class="stats-table w-full">
+                            <thead>
+                                <tr>
+                                    <th class="w-1/4">Statistic</th>
+                                    <th class="w-1/4">Cristiano Ronaldo</th>
+                                    <th class="w-1/4">Lionel Messi</th>
+                                    <th class="w-1/4">Leader</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>International Caps</td>
+                                    <td>208</td>
+                                    <td>175</td>
+                                    <td><span class="font-bold text-red-500">Ronaldo</span></td>
+                                </tr>
+                                <tr>
+                                    <td>International Goals</td>
+                                    <td>128</td>
+                                    <td>103</td>
+                                    <td><span class="font-bold text-red-500">Ronaldo</span></td>
+                                </tr>
+                                <tr>
+                                    <td>International Assists</td>
+                                    <td>44</td>
+                                    <td>58</td>
+                                    <td><span class="font-bold text-blue-500">Messi</span></td>
+                                </tr>
+                                <tr>
+                                    <td>World Cup Goals</td>
+                                    <td>8</td>
+                                    <td>13</td>
+                                    <td><span class="font-bold text-blue-500">Messi</span></td>
+                                </tr>
+                                <tr>
+                                    <td>World Cup Appearances</td>
+                                    <td>5</td>
+                                    <td>5</td>
+                                    <td><span class="font-bold text-gray-400">Equal</span></td>
+                                </tr>
+                                <tr>
+                                    <td>International Trophies</td>
+                                    <td>2</td>
+                                    <td>4</td>
+                                    <td><span class="font-bold text-blue-500">Messi</span></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="text-center mt-8">
+                <p class="text-gray-400 italic">*Stats are updated in real-time using football API</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Trophies Section -->
+    <section id="trophies" class="py-16 bg-slate-900">
+        <div class="container mx-auto px-4">
+            <h2 class="text-3xl md:text-4xl font-bold text-center mb-12">Trophies & Achievements</h2>
+            
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                <!-- Ronaldo Trophies -->
+                <div class="glass-card p-6">
+                    <div class="flex items-center mb-6">
+                        <img src="https://imgresizer.eurosport.com/unsafe/1200x0/filters:format(jpeg)/origin-imgresizer.eurosport.com/2022/12/10/3503328-71512748-2560-1440.jpg" alt="Cristiano Ronaldo" class="w-16 h-16 object-cover rounded-full border-2 border-red-500 mr-4">
+                        <h3 class="text-2xl font-bold">Cristiano Ronaldo</h3>
+                    </div>
+                    
+                    <div class="grid grid-cols-2 md:grid-cols-3 gap-4">
+                        <div class="bg-slate-800 p-4 rounded-lg flex flex-col items-center">
+                            <i class="fas fa-trophy text-yellow-500 text-3xl mb-2 trophy-icon"></i>
+                            <span class="font-bold">5x</span>
+                            <span class="text-sm text-center">Champions League</span>
+                            <span class="text-xs text-gray-500 mt-1">2008, 2014, 2016, 2017, 2018</span>
+                        </div>
+                        <div class="bg-slate-800 p-4 rounded-lg flex flex-col items-center">
+                            <i class="fas fa-trophy text-yellow-500 text-3xl mb-2 trophy-icon"></i>
+                            <span class="font-bold">7x</span>
+                            <span class="text-sm text-center">League Titles</span>
+                            <span class="text-xs text-gray-500 mt-1">3x PL, 2x La Liga, 2x Serie A</span>
+                        </div>
+                        <div class="bg-slate-800 p-4 rounded-lg flex flex-col items-center">
+                            <i class="fas fa-trophy text-yellow-500 text-3xl mb-2 trophy-icon"></i>
+                            <span class="font-bold">5x</span>
+                            <span class="text-sm text-center">Ballon d'Or</span>
+                            <span class="text-xs text-gray-500 mt-1">2008, 2013, 2014, 2016, 2017</span>
+                        </div>
+                        <div class="bg-slate-800 p-4 rounded-lg flex flex-col items-center">
+                            <i class="fas fa-trophy text-yellow-500 text-3xl mb-2 trophy-icon"></i>
+                            <span class="font-bold">4x</span>
+                            <span class="text-sm text-center">Club World Cup</span>
+                            <span class="text-xs text-gray-500 mt-1">2008, 2014, 2016, 2017</span>
+                        </div>
+                        <div class="bg-slate-800 p-4 rounded-lg flex flex-col items-center">
+                            <i class="fas fa-trophy text-yellow-500 text-3xl mb-2 trophy-icon"></i>
+                            <span class="font-bold">2x</span>
+                            <span class="text-sm text-center">International Trophies</span>
+                            <span class="text-xs text-gray-500 mt-1">Euro 2016, Nations League 2019</span>
+                        </div>
+                        <div class="bg-slate-800 p-4 rounded-lg flex flex-col items-center">
+                            <i class="fas fa-trophy text-yellow-500 text-3xl mb-2 trophy-icon"></i>
+                            <span class="font-bold">20x</span>
+                            <span class="text-sm text-center">Domestic Cups</span>
+                            <span class="text-xs text-gray-500 mt-1">FA Cup, Copa del Rey, Coppa Italia</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Messi Trophies -->
+                <div class="glass-card p-6">
+                    <div class="flex items-center mb-6">
+                        <img src="https://cdn.vox-cdn.com/thumbor/7NeP2qZzQpTs6ZkX9x9uQmQn3YQ=/0x0:5000x3333/1200x800/filters:focal(2100x1267:2900x2067)/cdn.vox-cdn.com/uploads/chorus_image/image/71918151/1243151601.0.jpg" alt="Lionel Messi" class="w-16 h-16 object-cover rounded-full border-2 border-blue-500 mr-4">
+                        <h3 class="text-2xl font-bold">Lionel Messi</h3>
+                    </div>
+                    
+                    <div class="grid grid-cols-2 md:grid-cols-3 gap-4">
+                        <div class="bg-slate-800 p-4 rounded-lg flex flex-col items-center">
+                            <i class="fas fa-trophy text-yellow-500 text-3xl mb-2 trophy-icon"></i>
+                            <span class="font-bold">4x</span>
+                            <span class="text-sm text-center">Champions League</span>
+                            <span class="text-xs text-gray-500 mt-1">2006, 2009, 2011, 2015</span>
+                        </div>
+                        <div class="bg-slate-800 p-4 rounded-lg flex flex-col items-center">
+                            <i class="fas fa-trophy text-yellow-500 text-3xl mb-2 trophy-icon"></i>
+                            <span class="font-bold">12x</span>
+                            <span class="text-sm text-center">League Titles</span>
+                            <span class="text-xs text-gray-500 mt-1">10x La Liga, 1x Ligue 1, 1x Ligue 1</span>
+                        </div>
+                        <div class="bg-slate-800 p-4 rounded-lg flex flex-col items-center">
+                            <i class="fas fa-trophy text-yellow-500 text-3xl mb-2 trophy-icon"></i>
+                            <span class="font-bold">7x</span>
+                            <span class="text-sm text-center">Ballon d'Or</span>
+                            <span class="text-xs text-gray-500 mt-1">2009, 2010, 2011, 2012, 2015, 2019, 2021</span>
+                        </div>
+                        <div class="bg-slate-800 p-4 rounded-lg flex flex-col items-center">
+                            <i class="fas fa-trophy text-yellow-500 text-3xl mb-2 trophy-icon"></i>
+                            <span class="font-bold">3x</span>
+                            <span class="text-sm text-center">Club World Cup</span>
+                            <span class="text-xs text-gray-500 mt-1">2009, 2011, 2015</span>
+                        </div>
+                        <div class="bg-slate-800 p-4 rounded-lg flex flex-col items-center">
+                            <i class="fas fa-trophy text-yellow-500 text-3xl mb-2 trophy-icon"></i>
+                            <span class="font-bold">4x</span>
+                            <span class="text-sm text-center">International Trophies</span>
+                            <span class="text-xs text-gray-500 mt-1">World Cup 2022, Copa America 2021, Finalissima 2022, Olympics 2008</span>
+                        </div>
+                        <div class="bg-slate-800 p-4 rounded-lg flex flex-col items-center">
+                            <i class="fas fa-trophy text-yellow-500 text-3xl mb-2 trophy-icon"></i>
+                            <span class="font-bold">22x</span>
+                            <span class="text-sm text-center">Domestic Cups</span>
+                            <span class="text-xs text-gray-500 mt-1">Copa del Rey, Supercopa, Coupe de France</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Highlights Section -->
+    <section id="highlights" class="py-16 highlight-section">
+        <div class="container mx-auto px-4">
+            <h2 class="text-3xl md:text-4xl font-bold text-center mb-12">Career Highlights</h2>
+            
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                <!-- Ronaldo Highlights -->
+                <div>
+                    <h3 class="text-2xl font-bold mb-6 flex items-center">
+                        <img src="https://imgresizer.eurosport.com/unsafe/1200x0/filters:format(jpeg)/origin-imgresizer.eurosport.com/2022/12/10/3503328-71512748-2560-1440.jpg" alt="Cristiano Ronaldo" class="w-10 h-10 object-cover rounded-full border-2 border-red-500 mr-3">
+                        Cristiano Ronaldo
+                    </h3>
+                    
+                    <div class="space-y-6">
+                        <div class="highlight-video glass-card p-4 rounded-xl">
+                            <div class="aspect-w-16 aspect-h-9 bg-black rounded-lg overflow-hidden">
+                                <iframe class="w-full h-64" src="https://www.youtube.com/embed/OUKGsb8CpF8" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+                            </div>
+                            <div class="mt-4">
+                                <h4 class="font-bold">Champions League Hat-trick vs Atletico Madrid</h4>
+                                <p class="text-sm text-gray-400">2019 - One of the greatest UCL performances</p>
+                            </div>
+                        </div>
+                        
+                        <div class="highlight-video glass-card p-4 rounded-xl">
+                            <div class="aspect-w-16 aspect-h-9 bg-black rounded-lg overflow-hidden">
+                                <iframe class="w-full h-64" src="https://www.youtube.com/embed/7ghP_7Zv41c" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+                            </div>
+                            <div class="mt-4">
+                                <h4 class="font-bold">Bicycle Kick vs Juventus</h4>
+                                <p class="text-sm text-gray-400">2018 - One of the greatest UCL goals ever</p>
+                            </div>
+                        </div>
+                        
+                        <div class="highlight-video glass-card p-4 rounded-xl">
+                            <div class="aspect-w-16 aspect-h-9 bg-black rounded-lg overflow-hidden">
+                                <iframe class="w-full h-64" src="https://www.youtube.com/embed/1G9F_fi3Q1Y" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+                            </div>
+                            <div class="mt-4">
+                                <h4 class="font-bold">Portugal vs Spain - World Cup Hat-trick</h4>
+                                <p class="text-sm text-gray-400">2018 - One of the greatest World Cup performances</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Messi Highlights -->
+                <div>
+                    <h3 class="text-2xl font-bold mb-6 flex items-center">
+                        <img src="https://cdn.vox-cdn.com/thumbor/7NeP2qZzQpTs6ZkX9x9uQmQn3YQ=/0x0:5000x3333/1200x800/filters:focal(2100x1267:2900x2067)/cdn.vox-cdn.com/uploads/chorus_image/image/71918151/1243151601.0.jpg" alt="Lionel Messi" class="w-10 h-10 object-cover rounded-full border-2 border-blue-500 mr-3">
+                        Lionel Messi
+                    </h3>
+                    
+                    <div class="space-y-6">
+                        <div class="highlight-video glass-card p-4 rounded-xl">
+                            <div class="aspect-w-16 aspect-h-9 bg-black rounded-lg overflow-hidden">
+                                <iframe class="w-full h-64" src="https://www.youtube.com/embed/xiZ2xpYhXr4" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+                            </div>
+                            <div class="mt-4">
+                                <h4 class="font-bold">World Cup Final - 2 Goals vs France</h4>
+                                <p class="text-sm text-gray-400">2022 - Crowned his legacy with World Cup glory</p>
+                            </div>
+                        </div>
+                        
+                        <div class="highlight-video glass-card p-4 rounded-xl">
+                            <div class="aspect-w-16 aspect-h-9 bg-black rounded-lg overflow-hidden">
+                                <iframe class="w-full h-64" src="https://www.youtube.com/embed/6V0YlVXwGBs" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+                            </div>
+                            <div class="mt-4">
+                                <h4 class="font-bold">The Greatest Goal vs Getafe</h4>
+                                <p class="text-sm text-gray-400">2007 - Often compared to Maradona's Goal of the Century</p>
+                            </div>
+                        </div>
+                        
+                        <div class="highlight-video glass-card p-4 rounded-xl">
+                            <div class="aspect-w-16 aspect-h-9 bg-black rounded-lg overflow-hidden">
+                                <iframe class="w-full h-64" src="https://www.youtube.com/embed/3Jdm6McvJZ4" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+                            </div>
+                            <div class="mt-4">
+                                <h4 class="font-bold">4 Goals vs Arsenal</h4>
+                                <p class="text-sm text-gray-400">2010 - One of the greatest UCL performances</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Gallery Section -->
+    <section id="gallery" class="py-16 bg-slate-900">
+        <div class="container mx-auto px-4">
+            <h2 class="text-3xl md:text-4xl font-bold text-center mb-12">Iconic Moments</h2>
+            
+            <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
+                <div class="gallery-img glass-card overflow-hidden rounded-lg">
+                    <img src="https://imgresizer.eurosport.com/unsafe/1200x0/filters:format(jpeg)/origin-imgresizer.eurosport.com/2022/12/10/3503328-71512748-2560-1440.jpg" alt="Ronaldo" class="w-full h-48 object-cover hover:scale-105 transition">
+                </div>
+                <div class="gallery-img glass-card overflow-hidden rounded-lg">
+                    <img src="https://cdn.vox-cdn.com/thumbor/7NeP2qZzQpTs6ZkX9x9uQmQn3YQ=/0x0:5000x3333/1200x800/filters:focal(2100x1267:2900x2067)/cdn.vox-cdn.com/uploads/chorus_image/image/71918151/1243151601.0.jpg" alt="Messi" class="w-full h-48 object-cover hover:scale-105 transition">
+                </div>
+                <div class="gallery-img glass-card overflow-hidden rounded-lg">
+                    <img src="https://library.sportingnews.com/styles/crop_style_16_9_mobile_2x/s3/2022-12/cristiano-ronaldo-portugal-world-cup-121022-getty-ftrjpg_1x0a3q8qj4h1r1j5j1x1m1g1x1.jpg" alt="Ronaldo" class="w-full h-48 object-cover hover:scale-105 transition">
+                </div>
+                <div class="gallery-img glass-card overflow-hidden rounded-lg">
+                    <img src="https://cdn.theathletic.com/app/uploads/2022/12/18212238/GettyImages-1450103675-scaled-e1671387751105-1024x683.jpg" alt="Messi" class="w-full h-48 object-cover hover:scale-105 transition">
+                </div>
+                <div class="gallery-img glass-card overflow-hidden rounded-lg">
+                    <img src="https://e0.365dm.com/22/12/768x432/skysports-cristiano-ronaldo_5994170.jpg" alt="Ronaldo" class="w-full h-48 object-cover hover:scale-105 transition">
+                </div>
+                <div class="gallery-img glass-card overflow-hidden rounded-lg">
+                    <img src="https://cdn.vox-cdn.com/thumbor/4Q5w3vY9Q2bY1z1k8Q3Q3Q3Q3Q3=/0x0:3000x2000/1200x800/filters:focal(1200x700:1680x1180)/cdn.vox-cdn.com/uploads/chorus_image/image/71918151/1243151601.0.jpg" alt="Messi" class="w-full h-48 object-cover hover:scale-105 transition">
+                </div>
+                <div class="gallery-img glass-card overflow-hidden rounded-lg">
+                    <img src="https://imgresizer.eurosport.com/unsafe/1200x0/filters:format(jpeg)/origin-imgresizer.eurosport.com/2022/12/10/3503328-71512748-2560-1440.jpg" alt="Ronaldo" class="w-full h-48 object-cover hover:scale-105 transition">
+                </div>
+                <div class="gallery-img glass-card overflow-hidden rounded-lg">
+                    <img src="https://cdn.vox-cdn.com/thumbor/7NeP2qZzQpTs6ZkX9x9uQmQn3YQ=/0x0:5000x3333/1200x800/filters:focal(2100x1267:2900x2067)/cdn.vox-cdn.com/uploads/chorus_image/image/71918151/1243151601.0.jpg" alt="Messi" class="w-full h-48 object-cover hover:scale-105 transition">
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Discussion Section -->
+    <section id="discussion" class="py-16 bg-gradient-to-b from-slate-800 to-slate-900">
+        <div class="container mx-auto px-4">
+            <h2 class="text-3xl md:text-4xl font-bold text-center mb-12">Join the Debate</h2>
+            
+            <div class="glass-card p-6 max-w-4xl mx-auto">
+                <div class="mb-6">
+                    <textarea id="commentInput" class="w-full p-4 rounded-lg bg-slate-800 border border-slate-700 focus:outline-none focus:border-cyan-400" placeholder="Share your thoughts on the GOAT debate..."></textarea>
+                    <div class="flex justify-end mt-2">
+                        <button id="postComment" class="px-4 py-2 bg-cyan-600 hover:bg-cyan-700 rounded-lg">Post Comment</button>
+                    </div>
+                </div>
+                
+                <div id="commentsContainer" class="space-y-4">
+                    <!-- Comments will be rendered here (start empty) -->
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Donation Section -->
+    <section class="py-16 bg-slate-900">
+    <div class="container mx-auto px-4">
+        <div class="glass-card p-8 max-w-4xl mx-auto text-center">
+            <h2 class="text-3xl font-bold mb-4">Win an Authentic Jersey of Your Favourite Player!</h2>
+            <p class="text-xl mb-6">Donate to support our website and get a chance to win an authentic jersey of your favorite GOAT!</p>
+            
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
+                <div class="bg-slate-800 p-6 rounded-xl">
+                    <div class="text-4xl text-yellow-500 mb-4">
+                        <i class="fas fa-trophy"></i>
+                    </div>
+                    <h3 class="font-bold mb-2">Follow Us</h3>
+                    <p class="text-sm text-gray-400 mb-4">Follow us on social media for updates</p>
+                    <div class="flex justify-center space-x-4">
+                        <a href="#" class="text-blue-400 hover:text-blue-300"><i class="fab fa-twitter text-xl"></i></a>
+                        <a href="#" class="text-pink-500 hover:text-pink-400"><i class="fab fa-instagram text-xl"></i></a>
+                        <a href="#" class="text-red-500 hover:text-red-400"><i class="fab fa-youtube text-xl"></i></a>
+                    </div>
+                </div>
+                
+                <div class="bg-slate-800 p-6 rounded-xl">
+                    <div class="text-4xl text-yellow-500 mb-4">
+                        <i class="fas fa-star"></i>
+                    </div>
+                    <h3 class="font-bold mb-2">Subscribe</h3>
+                    <p class="text-sm text-gray-400 mb-4">Subscribe to our newsletter</p>
+                    <input type="email" placeholder="Your Email" class="w-full px-4 py-2 rounded-lg bg-slate-700 border border-slate-600 focus:outline-none focus:border-blue-500">
+                </div>
+                
+                <div class="bg-slate-800 p-6 rounded-xl">
+                    <div class="text-4xl text-yellow-500 mb-4">
+                        <i class="fas fa-gift"></i>
+                    </div>
+                    <h3 class="font-bold mb-2">Donate</h3>
+                    <p class="text-sm text-gray-400 mb-4">Support us and get a chance to win</p>
+                    <button class="donate-btn px-6 py-2 rounded-full font-bold">Donate Now</button>
+                </div>
+            </div>
+            
+            <p class="text-gray-400 text-sm">*Winners will be selected randomly and contacted via email</p>
+        </div>
+    </div>
+</section>
+
+    <!-- Login Modal -->
+    <div id="loginModal" class="modal">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <h2 class="text-2xl font-bold mb-6 text-center">Login to Your Account</h2>
+            <form id="loginForm">
+                <div class="mb-4">
+                    <label for="loginEmail" class="block mb-2">Email</label>
+                    <input type="email" id="loginEmail" class="form-input w-full px-4 py-2 rounded-lg" required>
+                </div>
+                <div class="mb-6">
+                    <label for="loginPassword" class="block mb-2">Password</label>
+                    <input type="password" id="loginPassword" class="form-input w-full px-4 py-2 rounded-lg" required>
+                </div>
+                <button type="submit" class="w-full bg-blue-600 hover:bg-blue-700 text-white py-2 rounded-lg mb-4">Login</button>
+                <div class="text-center">
+                    <p class="text-gray-400">Don't have an account? <a href="#" id="switchToSignup" class="text-blue-400 hover:underline">Sign up</a></p>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Signup Modal -->
+    <div id="signupModal" class="modal">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <h2 class="text-2xl font-bold mb-6 text-center">Create Your Account</h2>
+            <form id="signupForm">
+                <div class="mb-4">
+                    <label for="signupName" class="block mb-2">Full Name</label>
+                    <input type="text" id="signupName" class="form-input w-full px-4 py-2 rounded-lg" required>
+                </div>
+                <div class="mb-4">
+                    <label for="signupEmail" class="block mb-2">Email</label>
+                    <input type="email" id="signupEmail" class="form-input w-full px-4 py-2 rounded-lg" required>
+                </div>
+                <div class="mb-4">
+                    <label for="signupPassword" class="block mb-2">Password</label>
+                    <input type="password" id="signupPassword" class="form-input w-full px-4 py-2 rounded-lg" required>
+                </div>
+                <div class="mb-6">
+                    <label for="signupConfirm" class="block mb-2">Confirm Password</label>
+                    <input type="password" id="signupConfirm" class="form-input w-full px-4 py-2 rounded-lg" required>
+                </div>
+                <button type="submit" class="w-full bg-blue-600 hover:bg-blue-700 text-white py-2 rounded-lg mb-4">Sign Up</button>
+                <div class="text-center">
+                    <p class="text-gray-400">Already have an account? <a href="#" id="switchToLogin" class="text-blue-400 hover:underline">Login</a></p>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Vote Modal -->
+    <div id="voteModal" class="modal">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <h2 class="text-2xl font-bold mb-6 text-center">Login Required</h2>
+            <p class="mb-6 text-center">You need to login or sign up to cast your vote in the GOAT debate.</p>
+            <div class="flex flex-col space-y-4">
+                <button id="goToLogin" class="w-full bg-blue-600 hover:bg-blue-700 text-white py-2 rounded-lg">Login</button>
+                <button id="goToSignup" class="w-full border border-blue-500 text-blue-500 hover:bg-blue-500 hover:text-white py-2 rounded-lg">Sign Up</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Success Modal -->
+    <div id="successModal" class="modal">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <div class="text-center">
+                <div id="votedPlayerImg" class="flex justify-center mb-4"></div>
+                <h2 class="text-2xl font-bold mb-4" id="successTitle">Your Vote is In!</h2>
+                <p class="mb-6" id="successMessage">
+                    <span class="font-bold" id="votedPlayer"></span> just got your support!
+                </p>
+                <div class="mb-6">
+                    <p class="font-bold mb-2">Share with friends:</p>
+                    <div class="flex justify-center space-x-4">
+                        <a href="#" id="shareTwitter" class="text-cyan-400 hover:text-cyan-300 text-2xl"><i class="fab fa-twitter"></i></a>
+                        <a href="#" id="shareFacebook" class="text-blue-500 hover:text-blue-400 text-2xl"><i class="fab fa-facebook"></i></a>
+                        <a href="#" id="shareWhatsapp" class="text-green-400 hover:text-green-300 text-2xl"><i class="fab fa-whatsapp"></i></a>
+                    </div>
+                </div>
+                <button id="copyLink" class="px-6 py-2 bg-cyan-600 hover:bg-cyan-700 rounded-lg flex items-center mx-auto">
+                    <i class="fas fa-link mr-2"></i> Copy Link
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Donation Modal -->
+    <div id="donateModal" class="modal">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <h2 class="text-2xl font-bold mb-6 text-center">Support GOAT Debate</h2>
+            <form id="donateForm">
+                <div class="mb-4">
+                    <label for="donateName" class="block mb-2">Full Name</label>
+                    <input type="text" id="donateName" class="form-input w-full px-4 py-2 rounded-lg" required>
+                </div>
+                <div class="mb-4">
+                    <label for="donateEmail" class="block mb-2">Email</label>
+                    <input type="email" id="donateEmail" class="form-input w-full px-4 py-2 rounded-lg" required>
+                </div>
+                <div class="mb-4">
+                    <label for="donateAmount" class="block mb-2">Amount ($)</label>
+                    <input type="number" id="donateAmount" min="5" class="form-input w-full px-4 py-2 rounded-lg" required>
+                </div>
+                <div class="mb-6">
+                    <label for="donatePlayer" class="block mb-2">Which player's jersey would you like to win?</label>
+                    <select id="donatePlayer" class="form-input w-full px-4 py-2 rounded-lg">
+                        <option value="ronaldo">Cristiano Ronaldo</option>
+                        <option value="messi">Lionel Messi</option>
+                        <option value="both">Both</option>
+                    </select>
+                </div>
+                <button type="submit" class="w-full bg-gradient-to-r from-yellow-500 to-red-500 hover:from-yellow-600 hover:to-red-600 text-white py-2 rounded-lg mb-4">Donate Now</button>
+                <p class="text-xs text-gray-400 text-center">*By donating, you agree to our terms and conditions. Winners will be selected randomly and contacted via email.</p>
+            </form>
+        </div>
+    </div>
+
+    <script>
+        // DOM Elements
+        const loginBtn = document.getElementById('loginBtn');
+        const signupBtn = document.getElementById('signupBtn');
+        const loginModal = document.getElementById('loginModal');
+        const signupModal = document.getElementById('signupModal');
+        const voteModal = document.getElementById('voteModal');
+        const successModal = document.getElementById('successModal');
+        const donateModal = document.getElementById('donateModal');
+        const closeBtns = document.querySelectorAll('.close');
+        const switchToSignup = document.getElementById('switchToSignup');
+        const switchToLogin = document.getElementById('switchToLogin');
+        const goToLogin = document.getElementById('goToLogin');
+        const goToSignup = document.getElementById('goToSignup');
+        const voteRonaldo = document.getElementById('voteRonaldo');
+        const voteMessi = document.getElementById('voteMessi');
+        const copyLink = document.getElementById('copyLink');
+        const donateBtns = document.querySelectorAll('.donate-btn');
+        const tabBtns = document.querySelectorAll('.tab-btn');
+        const tabContents = document.querySelectorAll('.tab-content');
+        const postComment = document.getElementById('postComment');
+        const commentInput = document.getElementById('commentInput');
+        const commentsContainer = document.getElementById('commentsContainer');
+        const likeBtns = document.querySelectorAll('.like-btn');
+        
+        // Modal Functions
+        function openModal(modal) {
+            modal.style.display = 'block';
+            document.body.style.overflow = 'hidden';
+        }
+        
+        function closeModal(modal) {
+            modal.style.display = 'none';
+            document.body.style.overflow = 'auto';
+        }
+        
+        // Event Listeners
+        loginBtn.addEventListener('click', () => openModal(loginModal));
+        signupBtn.addEventListener('click', () => openModal(signupModal));
+        
+        closeBtns.forEach(btn => {
+            btn.addEventListener('click', function() {
+                const modal = this.closest('.modal');
+                closeModal(modal);
+            });
+        });
+        
+        window.addEventListener('click', (e) => {
+            if (e.target.classList.contains('modal')) {
+                closeModal(e.target);
+            }
+        });
+        
+        switchToSignup.addEventListener('click', (e) => {
+            e.preventDefault();
+            closeModal(loginModal);
+            openModal(signupModal);
+        });
+        
+        switchToLogin.addEventListener('click', (e) => {
+            e.preventDefault();
+            closeModal(signupModal);
+            openModal(loginModal);
+        });
+        
+        voteRonaldo.addEventListener('click', () => {
+            if (!isLoggedIn()) {
+                openModal(voteModal);
+                localStorage.setItem('pendingVote', 'ronaldo');
+            } else {
+                submitVote('ronaldo');
+            }
+        });
+        
+        voteMessi.addEventListener('click', () => {
+            if (!isLoggedIn()) {
+                openModal(voteModal);
+                localStorage.setItem('pendingVote', 'messi');
+            } else {
+                submitVote('messi');
+            }
+        });
+        
+        goToLogin.addEventListener('click', () => {
+            closeModal(voteModal);
+            openModal(loginModal);
+        });
+        
+        goToSignup.addEventListener('click', () => {
+            closeModal(voteModal);
+            openModal(signupModal);
+        });
+        
+        copyLink.addEventListener('click', () => {
+            navigator.clipboard.writeText(window.location.href);
+            alert('Link copied to clipboard!');
+        });
+        
+        donateBtns.forEach(btn => {
+            btn.addEventListener('click', () => openModal(donateModal));
+        });
+        
+        // Tab Switching
+        tabBtns.forEach(btn => {
+            btn.addEventListener('click', () => {
+                const tabId = btn.getAttribute('data-tab');
+                
+                tabBtns.forEach(b => b.classList.remove('active'));
+                btn.classList.add('active');
+                
+                tabContents.forEach(content => content.classList.remove('active'));
+                document.getElementById(tabId).classList.add('active');
+            });
+        });
+        
+        // Comment System
+        postComment.addEventListener('click', () => {
+            const commentText = commentInput.value.trim();
+            if (commentText) {
+                addComment('CurrentUser', commentText);
+                commentInput.value = '';
+            }
+        });
+        
+        // Like Buttons
+        likeBtns.forEach(btn => {
+            btn.addEventListener('click', function() {
+                const likeCount = this.querySelector('span');
+                const icon = this.querySelector('i');
+                
+                if (this.classList.contains('liked')) {
+                    likeCount.textContent = parseInt(likeCount.textContent) - 1;
+                    icon.classList.remove('fas', 'fa-heart');
+                    icon.classList.add('far', 'fa-heart');
+                } else {
+                    likeCount.textContent = parseInt(likeCount.textContent) + 1;
+                    icon.classList.remove('far', 'fa-heart');
+                    icon.classList.add('fas', 'fa-heart');
+                }
+                
+                this.classList.toggle('liked');
+            });
+        });
+        
+        // Form Submissions
+        document.getElementById('loginForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            const email = document.getElementById('loginEmail').value;
+            const password = document.getElementById('loginPassword').value;
+            
+            // In a real app, you would validate credentials with a backend
+            localStorage.setItem('isLoggedIn', 'true');
+            closeModal(loginModal);
+            
+            // Check for pending vote
+            const pendingVote = localStorage.getItem('pendingVote');
+            if (pendingVote) {
+                submitVote(pendingVote);
+                localStorage.removeItem('pendingVote');
+            }
+        });
+        
+        document.getElementById('signupForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            const name = document.getElementById('signupName').value;
+            const email = document.getElementById('signupEmail').value;
+            const password = document.getElementById('signupPassword').value;
+            const confirm = document.getElementById('signupConfirm').value;
+            
+            if (password !== confirm) {
+                alert('Passwords do not match!');
+                return;
+            }
+            
+            // In a real app, you would send this data to a backend
+            localStorage.setItem('isLoggedIn', 'true');
+            closeModal(signupModal);
+            
+            // Check for pending vote
+            const pendingVote = localStorage.getItem('pendingVote');
+            if (pendingVote) {
+                submitVote(pendingVote);
+                localStorage.removeItem('pendingVote');
+            }
+        });
+        
+        document.getElementById('donateForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            const name = document.getElementById('donateName').value;
+            const email = document.getElementById('donateEmail').value;
+            const amount = document.getElementById('donateAmount').value;
+            const player = document.getElementById('donatePlayer').value;
+            
+            // In a real app, you would process payment here
+            alert(`Thank you for your donation of $${amount}! You're now entered for a chance to win an authentic jersey of your favourite player.`);
+            closeModal(donateModal);
+        });
+
+        // --- Voting Logic ---
+        function isLoggedIn() {
+            return localStorage.getItem('isLoggedIn') === 'true';
+        }
+        function submitVote(player) {
+            // Show success modal with player name
+            document.getElementById('votedPlayer').textContent = player === 'ronaldo' ? 'Cristiano Ronaldo' : 'Lionel Messi';
+            const votedPlayerImg = document.getElementById('votedPlayerImg');
+            votedPlayerImg.innerHTML = player === 'ronaldo'
+                ? `<img src="https://imgresizer.eurosport.com/unsafe/1200x0/filters:format(jpeg)/origin-imgresizer.eurosport.com/2022/12/10/3503328-71512748-2560-1440.jpg" alt="Cristiano Ronaldo" class="w-32 h-32 object-cover rounded-full border-4 border-red-500 shadow-lg mb-2">`
+                : `<img src="https://cdn.vox-cdn.com/thumbor/7NeP2qZzQpTs6ZkX9x9uQmQn3YQ=/0x0:5000x3333/1200x800/filters:focal(2100x1267:2900x2067)/cdn.vox-cdn.com/uploads/chorus_image/image/71918151/1243151601.0.jpg" alt="Lionel Messi" class="w-32 h-32 object-cover rounded-full border-4 border-blue-500 shadow-lg mb-2">`;
+            openModal(successModal);
+        }
+
+        // --- Discussion Section with Like/Dislike/Reply ---
+        // let comments = [
+        //     {
+        //         id: 1,
+        //         user: 'FootballFan92',
+        //         avatar: 'https://randomuser.me/api/portraits/men/32.jpg',
+        //         time: '2 hours ago',
+        //         text: 'Messi is clearly the GOAT. His vision and playmaking are unmatched, plus he won the World Cup!',
+        //         likes: 24,
+        //         dislikes: 2,
+        //         replies: [
+        //             {
+        //                 id: 3,
+        //                 user: 'SoccerAnalyst',
+        //                 avatar: 'https://randomuser.me/api/portraits/men/75.jpg',
+        //                 time: '1 hour ago',
+        //                 text: '@CR7Forever But Messi has better stats per game and more assists. It\'s not just about goals.',
+        //                 likes: 9,
+        //                 dislikes: 1,
+        //                 replies: []
+        //             }
+        //         ]
+        //     },
+        //     {
+        //         id: 2,
+        //         user: 'CR7Forever',
+        //         avatar: 'https://randomuser.me/api/portraits/women/44.jpg',
+        //         time: '5 hours ago',
+        //         text: 'Ronaldo has proven himself in 3 different leagues and has more Champions League goals. That\'s the real test of greatness!',
+        //         likes: 18,
+        //         dislikes: 3,
+        //         replies: []
+        //     }
+        // ];
+        // let commentId = 4;
+
+        function renderComments() {
+            commentsContainer.innerHTML = '';
+            comments.forEach(comment => {
+                commentsContainer.appendChild(createCommentElement(comment));
+            });
+        }
+
+        function createCommentElement(comment, isReply = false) {
+            const div = document.createElement('div');
+            div.className = `comment-box glass-card p-4 rounded-lg${isReply ? ' ml-8' : ''}`;
+            div.innerHTML = `
+                <div class="flex items-start">
+                    <img src="${comment.avatar}" alt="User" class="w-10 h-10 rounded-full mr-3">
+                    <div>
+                        <div class="flex items-center">
+                            <span class="font-bold mr-2">${comment.user}</span>
+                            <span class="text-xs text-gray-500">${comment.time}</span>
+                        </div>
+                        <p class="mt-1">${comment.text}</p>
+                        <div class="flex items-center mt-2">
+                            <button class="like-btn flex items-center text-gray-400 mr-2 ${comment.liked ? 'liked' : ''}">
+                                <i class="${comment.liked ? 'fas' : 'far'} fa-heart mr-1"></i> <span>${comment.likes}</span>
+                            </button>
+                            <button class="dislike-btn flex items-center text-gray-400 mr-2 ${comment.disliked ? 'disliked' : ''}">
+                                <i class="${comment.disliked ? 'fas' : 'far'} fa-thumbs-down mr-1"></i> <span>${comment.dislikes}</span>
+                            </button>
+                            <button class="reply-btn text-sm">Reply</button>
+                            ${isReply ? `<span class="delete-reply-btn">Delete</span>` : ''}
+                        </div>
+                        <div class="reply-input" style="display:none;">
+                            <textarea class="w-full p-2 rounded bg-slate-800 border border-slate-700 text-sm mt-2" placeholder="Write a reply..."></textarea>
+                            <button class="send-reply-btn px-3 py-1 bg-cyan-600 hover:bg-cyan-700 rounded mt-2 text-xs">Send</button>
+                        </div>
+                        <div class="replies mt-2">
+                            ${comment.replies && comment.replies.length > 0 ? comment.replies.map(r => createCommentElementHTML(r, true)).join('') : ''}
+                        </div>
+                    </div>
+                </div>
+            `;
+            // Like/Dislike/Reply logic
+            setTimeout(() => {
+                const likeBtn = div.querySelector('.like-btn');
+                const dislikeBtn = div.querySelector('.dislike-btn');
+                const replyBtn = div.querySelector('.reply-btn');
+                const replyInput = div.querySelector('.reply-input');
+                const sendReplyBtn = div.querySelector('.send-reply-btn');
+                if (likeBtn) likeBtn.onclick = () => {
+                    comment.liked = !comment.liked;
+                    comment.likes += comment.liked ? 1 : -1;
+                    renderComments();
+                };
+                if (dislikeBtn) dislikeBtn.onclick = () => {
+                    comment.disliked = !comment.disliked;
+                    comment.dislikes += comment.disliked ? 1 : -1;
+                    renderComments();
+                };
+                if (replyBtn) replyBtn.onclick = () => {
+                    replyInput.style.display = replyInput.style.display === 'none' ? 'block' : 'none';
+                };
+                if (sendReplyBtn) sendReplyBtn.onclick = () => {
+                    const text = replyInput.querySelector('textarea').value.trim();
+                    if (text) {
+                        if (!comment.replies) comment.replies = [];
+                        comment.replies.push({
+                            id: ++commentId,
+                            user: 'CurrentUser',
+                            avatar: 'https://randomuser.me/api/portraits/men/1.jpg',
+                            time: 'just now',
+                            text,
+                            likes: 0,
+                            dislikes: 0,
+                            replies: []
+                        });
+                        renderComments();
+                    }
+                };
+            }, 0);
+            return div;
+        }
+        function createCommentElementHTML(comment, isReply = false) {
+            return `
+                <div class="comment-box glass-card p-4 rounded-lg${isReply ? ' ml-8' : ''}">
+                    <div class="flex items-start">
+                        <img src="${comment.avatar}" alt="User" class="w-8 h-8 rounded-full mr-3">
+                        <div>
+                            <div class="flex items-center">
+                                <span class="font-bold mr-2">${comment.user}</span>
+                                <span class="text-xs text-gray-500">${comment.time}</span>
+                            </div>
+                            <p class="mt-1">${comment.text}</p>
+                            <div class="flex items-center mt-2">
+                                <button class="like-btn flex items-center text-gray-400 mr-2 ${comment.liked ? 'liked' : ''}">
+                                    <i class="${comment.liked ? 'fas' : 'far'} fa-heart mr-1"></i> <span>${comment.likes}</span>
+                                </button>
+                                <button class="dislike-btn flex items-center text-gray-400 mr-2 ${comment.disliked ? 'disliked' : ''}">
+                                    <i class="${comment.disliked ? 'fas' : 'far'} fa-thumbs-down mr-1"></i> <span>${comment.dislikes}</span>
+                                </button>
+                                <button class="reply-btn text-sm">Reply</button>
+                                ${isReply ? `<span class="delete-reply-btn">Delete</span>` : ''}
+                            </div>
+                            <div class="reply-input" style="display:none;">
+                                <textarea class="w-full p-2 rounded bg-slate-800 border border-slate-700 text-sm mt-2" placeholder="Write a reply..."></textarea>
+                                <button class="send-reply-btn px-3 py-1 bg-cyan-600 hover:bg-cyan-700 rounded mt-2 text-xs">Send</button>
+                            </div>
+                            <div class="replies mt-2">
+                                ${comment.replies && comment.replies.length > 0 ? comment.replies.map(r => createCommentElementHTML(r, true)).join('') : ''}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            `;
+        }
+
+        postComment.addEventListener('click', () => {
+            const commentText = commentInput.value.trim();
+            if (commentText) {
+                const user = localStorage.getItem('userName') || 'CurrentUser';
+                addComment(user, commentText);
+                commentInput.value = '';
+            }
+        });
+        renderComments();
+
+        // --- Share Buttons ---
+        document.getElementById('shareTwitter').onclick = function() {
+            window.open(`https://twitter.com/intent/tweet?text=I%20just%20voted%20in%20the%20GOAT%20Debate!%20Come%20vote%20for%20your%20GOAT%20here:%20${encodeURIComponent(window.location.href)}`, '_blank');
+        };
+        document.getElementById('shareFacebook').onclick = function() {
+            window.open(`https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(window.location.href)}`, '_blank');
+        };
+        document.getElementById('shareWhatsapp').onclick = function() {
+            window.open(`https://wa.me/?text=I%20just%20voted%20in%20the%20GOAT%20Debate!%20Vote%20now:%20${encodeURIComponent(window.location.href)}`, '_blank');
+        };
+
+        // Smooth scroll with slide effect for navbar
+        document.querySelectorAll('.nav-link').forEach(link => {
+            link.addEventListener('click', function(e) {
+                const href = this.getAttribute('href');
+                if (href && href.startsWith('#')) {
+                    e.preventDefault();
+                    const target = document.querySelector(href);
+                    if (target) {
+                        const top = target.getBoundingClientRect().top + window.scrollY - 70;
+                        window.scrollTo({
+                            top,
+                            behavior: 'smooth'
+                        });
+                    }
+                }
+            });
+        });
+
+        // Show logged-in user name in navbar and update everywhere needed
+        function showUserName() {
+            const userName = localStorage.getItem('userName');
+            const userNameDisplay = document.getElementById('userNameDisplay');
+            const loginBtn = document.getElementById('loginBtn');
+            const signupBtn = document.getElementById('signupBtn');
+            if (userName && userNameDisplay) {
+                userNameDisplay.textContent = `👤 ${userName}`;
+                userNameDisplay.classList.remove('hidden');
+                if (loginBtn) loginBtn.classList.add('hidden');
+                if (signupBtn) signupBtn.classList.add('hidden');
+            } else if (userNameDisplay) {
+                userNameDisplay.classList.add('hidden');
+                if (loginBtn) loginBtn.classList.remove('hidden');
+                if (signupBtn) signupBtn.classList.remove('hidden');
+            }
+        }
+
+        // Call showUserName on page load and after login/signup
+        showUserName();
+
+        // Correct login/signup logic
+        document.getElementById('loginForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            const email = document.getElementById('loginEmail').value;
+            const password = document.getElementById('loginPassword').value;
+            // Simulate login
+            localStorage.setItem('isLoggedIn', 'true');
+            localStorage.setItem('userName', email.split('@')[0]);
+            closeModal(loginModal);
+            showUserName();
+            // Check for pending vote
+            const pendingVote = localStorage.getItem('pendingVote');
+            if (pendingVote) {
+                submitVote(pendingVote);
+                localStorage.removeItem('pendingVote');
+            }
+        });
+        document.getElementById('signupForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            const name = document.getElementById('signupName').value;
+            const email = document.getElementById('signupEmail').value;
+            const password = document.getElementById('signupPassword').value;
+            const confirm = document.getElementById('signupConfirm').value;
+            if (password !== confirm) {
+                alert('Passwords do not match!');
+                return;
+            }
+            localStorage.setItem('isLoggedIn', 'true');
+            localStorage.setItem('userName', name);
+            closeModal(signupModal);
+            showUserName();
+            // Check for pending vote
+            const pendingVote = localStorage.getItem('pendingVote');
+            if (pendingVote) {
+                submitVote(pendingVote);
+                localStorage.removeItem('pendingVote');
+            }
+        });
+
+        // Voting logic: must be logged in
+        voteRonaldo.addEventListener('click', () => {
+            if (!isLoggedIn()) {
+                openModal(voteModal);
+                localStorage.setItem('pendingVote', 'ronaldo');
+            } else {
+                submitVote('ronaldo');
+            }
+        });
+        voteMessi.addEventListener('click', () => {
+            if (!isLoggedIn()) {
+                openModal(voteModal);
+                localStorage.setItem('pendingVote', 'messi');
+            } else {
+                submitVote('messi');
+            }
+        });
+
+        function submitVote(player) {
+            // Save vote
+            localStorage.setItem('userVote', player);
+            updateVotingState();
+            // Show success modal with player name and image and user's name
+            const userName = localStorage.getItem('userName') || '';
+            document.getElementById('successTitle').textContent = `${userName}, your vote is in!`;
+            document.getElementById('votedPlayer').textContent = player === 'ronaldo' ? 'Cristiano Ronaldo' : 'Lionel Messi';
+            const votedPlayerImg = document.getElementById('votedPlayerImg');
+            votedPlayerImg.innerHTML = player === 'ronaldo'
+                ? `<img src="download (6).jpg" alt="Cristiano Ronaldo" class="w-32 h-32 object-cover rounded-full border-4 border-red-500 shadow-lg mb-2">`
+                : `<img src="Messi 10.jpg" alt="Lionel Messi" class="w-32 h-32 object-cover rounded-full border-4 border-blue-500 shadow-lg mb-2">`;
+            openModal(successModal);
+        }
+
+        // --- Discussion Section with Like/Dislike/Reply ---
+        // let comments = [
+        //     {
+        //         id: 1,
+        //         user: 'FootballFan92',
+        //         avatar: 'https://randomuser.me/api/portraits/men/32.jpg',
+        //         time: '2 hours ago',
+        //         text: 'Messi is clearly the GOAT. His vision and playmaking are unmatched, plus he won the World Cup!',
+        //         likes: 24,
+        //         dislikes: 2,
+        //         replies: [
+        //             {
+        //                 id: 3,
+        //                 user: 'SoccerAnalyst',
+        //                 avatar: 'https://randomuser.me/api/portraits/men/75.jpg',
+        //                 time: '1 hour ago',
+        //                 text: '@CR7Forever But Messi has better stats per game and more assists. It\'s not just about goals.',
+        //                 likes: 9,
+        //                 dislikes: 1,
+        //                 replies: []
+        //             }
+        //         ]
+        //     },
+        //     {
+        //         id: 2,
+        //         user: 'CR7Forever',
+        //         avatar: 'https://randomuser.me/api/portraits/women/44.jpg',
+        //         time: '5 hours ago',
+        //         text: 'Ronaldo has proven himself in 3 different leagues and has more Champions League goals. That\'s the real test of greatness!',
+        //         likes: 18,
+        //         dislikes: 3,
+        //         replies: []
+        //     }
+        // ];
+        // let commentId = 4;
+
+        function renderComments() {
+            commentsContainer.innerHTML = '';
+            comments.forEach(comment => {
+                commentsContainer.appendChild(createCommentElement(comment));
+            });
+        }
+
+        function createCommentElement(comment, isReply = false, parentReplies = null) {
+            const div = document.createElement('div');
+            div.className = `comment-box glass-card p-4 rounded-lg${isReply ? ' ml-8' : ''}`;
+            div.innerHTML = `
+                <div class="flex items-start">
+                    <img src="${comment.avatar}" alt="User" class="w-10 h-10 rounded-full mr-3">
+                    <div>
+                        <div class="flex items-center">
+                            <span class="font-bold mr-2">${comment.user}</span>
+                            <span class="text-xs text-gray-500">${comment.time}</span>
+                        </div>
+                        <p class="mt-1">${comment.text}</p>
+                        <div class="flex items-center mt-2">
+                            <button class="like-btn flex items-center text-gray-400 mr-2 ${comment.liked ? 'liked' : ''}">
+                                <i class="${comment.liked ? 'fas' : 'far'} fa-heart mr-1"></i> <span>${comment.likes}</span>
+                            </button>
+                            <button class="dislike-btn flex items-center text-gray-400 mr-2 ${comment.disliked ? 'disliked' : ''}">
+                                <i class="${comment.disliked ? 'fas' : 'far'} fa-thumbs-down mr-1"></i> <span>${comment.dislikes}</span>
+                            </button>
+                            <button class="reply-btn text-sm">Reply</button>
+                            ${isReply ? `<span class="delete-reply-btn">Delete</span>` : ''}
+                        </div>
+                        <div class="reply-input" style="display:none;">
+                            <textarea class="w-full p-2 rounded bg-slate-800 border border-slate-700 text-sm mt-2" placeholder="Write a reply..."></textarea>
+                            <button class="send-reply-btn px-3 py-1 bg-cyan-600 hover:bg-cyan-700 rounded mt-2 text-xs">Send</button>
+                        </div>
+                        <div class="replies mt-2">
+                            ${comment.replies && comment.replies.length > 0 ? comment.replies.map(r => createCommentElementHTML(r, true)).join('') : ''}
+                        </div>
+                    </div>
+                </div>
+            `;
+            setTimeout(() => {
+                const likeBtn = div.querySelector('.like-btn');
+                const dislikeBtn = div.querySelector('.dislike-btn');
+                const replyBtn = div.querySelector('.reply-btn');
+                const replyInput = div.querySelector('.reply-input');
+                const sendReplyBtn = div.querySelector('.send-reply-btn');
+                const deleteReplyBtn = div.querySelector('.delete-reply-btn');
+                if (likeBtn) likeBtn.onclick = () => {
+                    comment.liked = !comment.liked;
+                    comment.likes += comment.liked ? 1 : -1;
+                    renderComments();
+                };
+                if (dislikeBtn) dislikeBtn.onclick = () => {
+                    comment.disliked = !comment.disliked;
+                    comment.dislikes += comment.disliked ? 1 : -1;
+                    renderComments();
+                };
+                if (replyBtn) replyBtn.onclick = () => {
+                    replyInput.style.display = replyInput.style.display === 'none' ? 'block' : 'none';
+                };
+                if (sendReplyBtn) sendReplyBtn.onclick = () => {
+                    const text = replyInput.querySelector('textarea').value.trim();
+                    if (text) {
+                        if (!comment.replies) comment.replies = [];
+                        comment.replies.push({
+                            id: ++commentId,
+                            user: localStorage.getItem('userName') || 'CurrentUser',
+                            avatar: 'https://randomuser.me/api/portraits/men/1.jpg',
+                            time: 'just now',
+                            text,
+                            likes: 0,
+                            dislikes: 0,
+                            replies: []
+                        });
+                        renderComments();
+                    }
+                };
+                if (deleteReplyBtn && parentReplies) deleteReplyBtn.onclick = () => {
+                    const idx = parentReplies.indexOf(comment);
+                    if (idx > -1) {
+                        parentReplies.splice(idx, 1);
+                        renderComments();
+                    }
+                };
+            }, 0);
+            return div;
+        }
+        function createCommentElementHTML(comment, isReply = false) {
+            return `
+                <div class="comment-box glass-card p-4 rounded-lg${isReply ? ' ml-8' : ''}">
+                    <div class="flex items-start">
+                        <img src="${comment.avatar}" alt="User" class="w-8 h-8 rounded-full mr-3">
+                        <div>
+                            <div class="flex items-center">
+                                <span class="font-bold mr-2">${comment.user}</span>
+                                <span class="text-xs text-gray-500">${comment.time}</span>
+                            </div>
+                            <p class="mt-1">${comment.text}</p>
+                            <div class="flex items-center mt-2">
+                                <button class="like-btn flex items-center text-gray-400 mr-2 ${comment.liked ? 'liked' : ''}">
+                                    <i class="${comment.liked ? 'fas' : 'far'} fa-heart mr-1"></i> <span>${comment.likes}</span>
+                                </button>
+                                <button class="dislike-btn flex items-center text-gray-400 mr-2 ${comment.disliked ? 'disliked' : ''}">
+                                    <i class="${comment.disliked ? 'fas' : 'far'} fa-thumbs-down mr-1"></i> <span>${comment.dislikes}</span>
+                                </button>
+                                <button class="reply-btn text-sm">Reply</button>
+                                ${isReply ? `<span class="delete-reply-btn">Delete</span>` : ''}
+                            </div>
+                            <div class="reply-input" style="display:none;">
+                                <textarea class="w-full p-2 rounded bg-slate-800 border border-slate-700 text-sm mt-2" placeholder="Write a reply..."></textarea>
+                                <button class="send-reply-btn px-3 py-1 bg-cyan-600 hover:bg-cyan-700 rounded mt-2 text-xs">Send</button>
+                            </div>
+                            <div class="replies mt-2">
+                                ${comment.replies && comment.replies.length > 0 ? comment.replies.map(r => createCommentElementHTML(r, true)).join('') : ''}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            `;
+        }
+        function renderComments() {
+            commentsContainer.innerHTML = '';
+            comments.forEach(comment => {
+                commentsContainer.appendChild(createCommentElement(comment, false, comments));
+                if (comment.replies) {
+                    comment.replies.forEach(reply => {
+                        commentsContainer.appendChild(createCommentElement(reply, true, comment.replies));
+                    });
+                }
+            });
+        }
+        // ...rest of your JS code...
+
+        // --- Block Multiple Votes ---
+        function hasVoted() {
+            return !!localStorage.getItem('userVote');
+        }
+        function blockVoting() {
+            voteRonaldo.disabled = true;
+            voteMessi.disabled = true;
+            voteRonaldo.classList.add('opacity-50', 'cursor-not-allowed');
+            voteMessi.classList.add('opacity-50', 'cursor-not-allowed');
+        }
+        function unblockVoting() {
+            voteRonaldo.disabled = false;
+            voteMessi.disabled = false;
+            voteRonaldo.classList.remove('opacity-50', 'cursor-not-allowed');
+            voteMessi.classList.remove('opacity-50', 'cursor-not-allowed');
+        }
+        function updateVotingState() {
+            if (hasVoted()) {
+                blockVoting();
+            } else {
+                unblockVoting();
+            }
+        }
+        updateVotingState();
+
+        // --- Voting logic: must be logged in, one vote only ---
+        voteRonaldo.addEventListener('click', () => {
+            if (hasVoted()) return;
+            if (!isLoggedIn()) {
+                openModal(voteModal);
+                localStorage.setItem('pendingVote', 'ronaldo');
+            } else {
+                submitVote('ronaldo');
+            }
+        });
+        voteMessi.addEventListener('click', () => {
+            if (hasVoted()) return;
+            if (!isLoggedIn()) {
+                openModal(voteModal);
+                localStorage.setItem('pendingVote', 'messi');
+            } else {
+                submitVote('messi');
+            }
+        });
+
+        function submitVote(player) {
+            // Save vote
+            localStorage.setItem('userVote', player);
+            updateVotingState();
+            // Show success modal with player name and image
+            document.getElementById('votedPlayer').textContent = player === 'ronaldo' ? 'Cristiano Ronaldo' : 'Lionel Messi';
+            const votedPlayerImg = document.getElementById('votedPlayerImg');
+            votedPlayerImg.innerHTML = player === 'ronaldo'
+                ? `<img src="download (6).jpg" alt="Cristiano Ronaldo" class="w-32 h-32 object-cover rounded-full border-4 border-red-500 shadow-lg mb-2">`
+                : `<img src="Messi 10.jpg" alt="Lionel Messi" class="w-32 h-32 object-cover rounded-full border-4 border-blue-500 shadow-lg mb-2">`;
+            openModal(successModal);
+        }
+
+        // --- On page load, block voting if already voted ---
+        document.addEventListener('DOMContentLoaded', updateVotingState);
+
+        // --- Fix modal close buttons ---
+        closeBtns.forEach(btn => {
+            btn.addEventListener('click', function() {
+                const modal = this.closest('.modal');
+                closeModal(modal);
+            });
+        });
+
+        // --- Animated hover for hero images ---
+        document.querySelectorAll('.hero-player-img').forEach(img => {
+            img.addEventListener('mousemove', function(e) {
+                this.style.transform = 'scale(1.1) rotate(-2deg)';
+                this.style.filter = 'drop-shadow(0 0 80px #fff8) blur(0.5px)';
+            });
+            img.addEventListener('mouseleave', function(e) {
+                this.style.transform = '';
+                this.style.filter = '';
+            });
+        });
+
+        // --- Responsive Navbar: Show/hide on mobile (optional, basic example) ---
+        document.querySelectorAll('.md\\:hidden').forEach(btn => {
+            btn.addEventListener('click', () => {
+                const navLinks = document.querySelector('.md\\:flex');
+                if (navLinks) navLinks.classList.toggle('hidden');
+            });
+        });
+
+        // --- User Dropdown for Logout ---
+        const userNameDisplay = document.getElementById('userNameDisplay');
+        const logoutDropdown = document.getElementById('logoutDropdown');
+        if (userNameDisplay) {
+            userNameDisplay.addEventListener('click', function (e) {
+                e.stopPropagation();
+                logoutDropdown.classList.toggle('hidden');
+            });
+            document.addEventListener('click', function () {
+                logoutDropdown.classList.add('hidden');
+            });
+        }
+        const logoutBtn = document.getElementById('logoutBtn');
+        if (logoutBtn) {
+            logoutBtn.addEventListener('click', function () {
+                localStorage.removeItem('isLoggedIn');
+                localStorage.removeItem('userName');
+                localStorage.removeItem('userVote');
+                location.reload();
+            });
+        }
+
+        // --- Discussion: Start with empty comments ---
+        let comments = [];
+        let commentId = 1;
+        function renderComments() {
+            commentsContainer.innerHTML = '';
+            comments.forEach(comment => {
+                commentsContainer.appendChild(createCommentElement(comment));
+            });
+        }
+        renderComments();
+    </script>
+</body>
+</html>
